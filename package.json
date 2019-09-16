@@ -1,0 +1,52 @@
+{
+  "name": "18.8wyszukiwarkagif",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-standalone": "^6.26.0",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "autoprefixer-cli": "^1.0.0",
+    "browser-sync": "^2.26.5",
+    "globstar": "^1.0.0",
+    "http-server": "^0.11.1",
+    "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
+    "nu-html-checker": "^0.1.0",
+    "onchange": "^6.0.0",
+    "readdirp": "^3.0.1"
+  },
+  "scripts": {
+    "test": "npm-run-all test:*",
+    "test:html": "globstar nu-html-checker html/*.html",
+    "init-project": "npm install && npm-run-all init:*",
+    "init:dirs": "mkdirp sass css vendor images js html",
+    "init:files": "touch README.md html/index.html sass/style.scss js/script.js",
+    "init:gitignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o .gitignore",
+    "build": "npm-run-all build:* test",
+    "build:clean": "rimraf -r -f css/*.css css/*.map",
+    "build:sass": "node-sass --output-style compact -o css sass",
+    "build:autoprefixer": "autoprefixer-cli css/style.css",
+    "build-dev:sass": "node-sass --output-style expanded --source-map true -o css sass",
+    "watch": "npm-run-all build -p watch:*",
+    "watch:onchangesass": "onchange sass/**/*.scss -- npm run watch:sassprefixer",
+    "watch:sassprefixer": "npm-run-all -s sassprefixer:*",
+    "sassprefixer:sass": "node-sass --output-style expanded --source-map true -o css sass",
+    "sassprefixer:autoprefixer": "autoprefixer-cli -o css/style.prefixed.css css/style.css",
+    "watch:browsersync": "browser-sync start --server --files css/*.css html/*.html",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DzesikaTkaczyk/18.8WyszukiwarkaGif.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DzesikaTkaczyk/18.8WyszukiwarkaGif/issues"
+  },
+  "homepage": "https://github.com/DzesikaTkaczyk/18.8WyszukiwarkaGif#readme"
+}
