@@ -15,30 +15,42 @@ App = React.createClass({
         this.setState({
             loading: true
         });
-        this.getGif(searchingText, function(gif) {
+        this.getGif(searchingText)
+        .then(gif => {
             this.setState({
                 loading: false,
                 gif: gif,
                 searchingText: searchingText
-            });
-        }.bind(this));
+            });    
+        })
+        .catch(error => console.error('Something went wrong', error))
     },
 
-    getGif: function(searchingText, callback) { 
-        var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;
-        var xhr = new XMLHttpRequest(); 
-        xhr.open('GET', url);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-               var data = JSON.parse(xhr.responseText).data; 
-                var gif = {
-                    url: data.fixed_width_downsampled_url,
-                    sourceUrl: data.url
+    getGif: function(searchingText) { 
+        return new Promise (
+            function (resolve,reject) {
+                var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;
+                var xhr = new XMLHttpRequest(); 
+                
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText).data; 
+                        var gif = {
+                            url: data.fixed_width_downsampled_url,
+                            sourceUrl: data.url
+                        };
+                        resolve(gif);
+                    } else {
+                        reject(new Error(this.statusText));
+                    }
                 };
-                callback(gif);
-            }
-        };
-        xhr.send();
+                xhr.onerror = function() {
+                    reject(new Error(
+                       `XMLHttpRequest Error: ${this.statusText}`));
+                };
+                xhr.open('GET', url);
+                xhr.send();
+        })
     },
 
     render: function() {

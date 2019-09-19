@@ -20,3 +20,15 @@ Gif = React.createClass({
     );
   }
 });
+
+/*function GetGif (url) {
+  return new Promise((resolve, reject) => {
+    if (this.status === 200) {
+      resolve(this.props.sourceUrl);
+    } else {
+      reject(GIPHY_LOADING_URL);
+    }
+  });
+
+  render: React.createClass
+}*/
