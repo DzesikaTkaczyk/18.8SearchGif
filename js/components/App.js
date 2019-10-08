@@ -37,7 +37,8 @@ App = React.createClass({
                         const data = JSON.parse(xhr.responseText).data; 
                         const gif = {
                             url: data.fixed_width_downsampled_url,
-                            sourceUrl: data.url
+                            sourceUrl: data.url,
+                            alt: searchingText
                         };
                         resolve(gif);
                     } else {
@@ -60,7 +61,7 @@ App = React.createClass({
             textAlign: 'center',
             width: '90%'
         };
-
+        console.log(this.state.searchingText)
         return (
             <div style={styles}>
                 <h1>Wyszukiwarka GIFow!</h1>
@@ -70,6 +71,7 @@ App = React.createClass({
                     loading={this.state.loading}
                     url={this.state.gif.url}
                     sourceUrl={this.state.gif.sourceUrl}
+                    alt={this.state.searchingText}
                 />
             </div>
         );
