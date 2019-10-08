@@ -38,7 +38,6 @@ App = React.createClass({
                         const gif = {
                             url: data.fixed_width_downsampled_url,
                             sourceUrl: data.url,
-                            alt: searchingText
                         };
                         resolve(gif);
                     } else {
