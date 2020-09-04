@@ -16,7 +16,7 @@
     "browser-sync": "^2.26.5",
     "globstar": "^1.0.0",
     "http-server": "^0.11.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "npm-run-all": "^4.1.5",
     "nu-html-checker": "^0.1.0",
     "onchange": "^6.0.0",
